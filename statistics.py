@@ -1,10 +1,12 @@
 import database_access;
 
+#Función para obtener la serie con más cantidad de minutos invertidos
 def get_most_watched_series():
     all_series = database_access.get_all_series();
     most_watched_series = max(all_series, key=lambda item:item['tiempo_invertido']);
     return most_watched_series;
 
+#Función para obtener la plataforma que usa más el usuario
 def get_most_watched_platform():
     all_series = database_access.get_all_series();
     platforms_count = {};
@@ -21,6 +23,7 @@ def get_most_watched_platform():
 
     return most_watched_platform;
 
+#Función para obtener las series ya terminadas
 def get_finished_series():
     all_series = database_access.get_all_series();
     finished = list(filter(lambda item: item['estado'] == 'Finalizada', all_series));
