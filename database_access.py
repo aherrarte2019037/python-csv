@@ -29,7 +29,7 @@ def get_movies():
     
     return movies;
 
-#Devuelve True si la película se añadió correctamente
+#Devuelve True si la película se añadió
 #Devuelve False si la película no se añadió
 def add_movie(serie, estado, duracion_capitulo, capitulos_vistos, plataforma):
     try:
