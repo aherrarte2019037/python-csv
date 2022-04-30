@@ -4,24 +4,28 @@ import data_validation;
 #Nombres de las columnas
 fieldnames = ['serie', 'estado', 'duracion_capitulo', 'capitulos_vistos', 'plataforma', 'tiempo_invertido'];
 
-#Variables que contienen las plataformas y los estados de una película
-movie_platforms = ['Netflix', 'HBO', 'Disney Plus', 'Primevideo', 'Crunchyoll'];
-movie_states = ['Quiero verla', 'En proceso', 'Dejé de verla', 'Finalizada'];
+#Variables que contienen las plataformas y los estados de una serie
+series_platforms = ['Netflix', 'HBO', 'Disney Plus', 'Primevideo', 'Crunchyoll'];
+series_states = ['Quiero verla', 'En proceso', 'Dejé de verla', 'Finalizada'];
    
-#Obtener lista de películas
-def get_movies():
+#Obtener lista de series
+def get_all_series():
     file = open('database.csv', newline='', encoding='utf-8');
     file_reader = csv.DictReader(file);
-    movies = [];
+    all_series = [];
     
-    for row in file_reader: movies.append(row);
+    for row in file_reader:
+        row['tiempo_invertido'] = int(row['tiempo_invertido']);
+        row['duracion_capitulo'] = int(row['duracion_capitulo']);
+        row['capitulos_vistos'] = int(row['capitulos_vistos']);
+        all_series.append(row);
     
     file.close();
-    return movies;
+    return all_series;
 
-#Devuelve True si la película se añadió
-#Devuelve False si la película no se añadió (dato incorrecto)
-def add_movie(serie, estado, duracion_capitulo, capitulos_vistos, plataforma):
+#Devuelve True si la serie se añadió
+#Devuelve False si la serie no se añadió (dato incorrecto)
+def add_series(serie, estado, duracion_capitulo, capitulos_vistos, plataforma):
     try:
         duracion_capitulo = int(duracion_capitulo);
         capitulos_vistos = int(capitulos_vistos);
@@ -52,7 +56,7 @@ def add_movie(serie, estado, duracion_capitulo, capitulos_vistos, plataforma):
             'duracion_capitulo': duracion_capitulo,
             'capitulos_vistos': capitulos_vistos,
             'plataforma': plataforma.title(),
-            'tiempo_invertido': 0,
+            'tiempo_invertido': capitulos_vistos * duracion_capitulo,
         });
         file.close();
 
@@ -61,9 +65,9 @@ def add_movie(serie, estado, duracion_capitulo, capitulos_vistos, plataforma):
     except:
         return False;
 
-#Actualizar dato de película según indíce, field puede ser 'estado' o 'capitulos_vistos'
-#Devuelve True si la película se edito o False si un dato es incorrecto
-def update_movie(index, field, value):
+#Actualizar dato de serie según indíce, field puede ser 'estado' o 'capitulos_vistos'
+#Devuelve True si la serie se edito o False si un dato es incorrecto
+def update_series(index, field, value):
     try:
         is_valid = False;
         
@@ -76,18 +80,20 @@ def update_movie(index, field, value):
         
         if not is_valid: return False;
         
-        movies = get_movies();
-        if len(movies) == 0: return True;
+        all_series = get_all_series();
+        if len(all_series) == 0: return True;
         
-        movie = movies[index];
-        movie[field] = value;
-        movies[index] = movie;
+        series = all_series[index];
+        series[field] = value;
+        series['tiempo_invertido'] = series['capitulos_vistos'] * series['duracion_capitulo'];
+        
+        all_series[index] = series;
         
         file = open('database.csv', 'w', newline='', encoding='utf-8');
         file_writer = csv.DictWriter(file, fieldnames=fieldnames);
         
         file_writer.writeheader();
-        file_writer.writerows(movies);
+        file_writer.writerows(all_series);
         file.close();
         
         return True;
@@ -96,6 +102,6 @@ def update_movie(index, field, value):
         return False;
 
 #Ejemplos
-#print(get_movies());
-#add_movie('Mindhunter', movie_states[0], 20, 0, movie_platforms[0]);
-#update_movie(1, fieldnames[1], movie_states[2]);
+#print(get_all_series());
+#add_series('Mindhunter', series_states[0], 20, 0, series_platforms[0]);
+#update_series(0, fieldnames[3], 1);
