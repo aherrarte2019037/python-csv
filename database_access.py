@@ -4,29 +4,16 @@ import data_validation;
 #Variables que contienen las plataformas y los estados de una película
 movie_platforms = ['Netflix', 'HBO', 'Disney Plus', 'Primevideo', 'Crunchyoll'];
 movie_states = ['Quiero verla', 'En proceso', 'Dejé de verla', 'Finalizada'];
-
-#Obtener archivo para agregar datos(append)
-def get_file_writer_append():
-    file = open('database.csv', 'a', newline='', encoding='utf-8');
-    fieldnames = ['serie', 'estado', 'duracion_capitulo', 'capitulos_vistos', 'plataforma', 'tiempo_invertido'];
-    file_writer = csv.DictWriter(file, fieldnames=fieldnames);
-    
-    return file_writer;        
-
-#obtener archivo para leer datos 
-def get_file_reader():
-    file = open('database.csv', newline='', encoding='utf-8');
-    reader = csv.DictReader(file);
-    
-    return reader;
-
+   
 #Obtener lista de películas
 def get_movies():
-    file_reader = get_file_reader();
+    file = open('database.csv', newline='', encoding='utf-8');
+    file_reader = csv.DictReader(file);
     movies = [];
     
     for row in file_reader: movies.append(row);
     
+    file.close();
     return movies;
 
 #Devuelve True si la película se añadió
@@ -53,8 +40,10 @@ def add_movie(serie, estado, duracion_capitulo, capitulos_vistos, plataforma):
         
         if not is_valid:
             return False;
-
-        file_writer = get_file_writer_append();
+        
+        file = open('database.csv', 'a', newline='', encoding='utf-8');
+        fieldnames = ['serie', 'estado', 'duracion_capitulo', 'capitulos_vistos', 'plataforma', 'tiempo_invertido'];
+        file_writer = csv.DictWriter(file, fieldnames=fieldnames);
         file_writer.writerow({
             'serie': serie.title(),
             'estado': estado.capitalize(),
@@ -63,6 +52,7 @@ def add_movie(serie, estado, duracion_capitulo, capitulos_vistos, plataforma):
             'plataforma': plataforma.title(),
             'tiempo_invertido': 0,
         });
+        file.close();
 
         return True;
         
