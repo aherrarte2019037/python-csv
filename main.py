@@ -37,6 +37,7 @@ def menu_builder(header: str, options: list, footer: str, return_value = False, 
             else: return cursor_position
 
   # Cleans terminal screen  
+
 def clean_screen():
     system("cls")
 
@@ -57,10 +58,13 @@ def solicitar_datos ():
 def accion_usuario(accion,):
     if accion == 0:
         database_access.add_series(name_serie,estado_serie,duracion_serie,cap_vistos,plataforma_serie)    
+    
     elif accion == 1:
         database_access.get_all_series()
+    
     elif accion == 2:
         print ("cap vistos")
+    
     elif accion == 3:
         estadistica_a_ver =  menu_builder('¿Qué desea ver?',
         ['Serie con minutos más invertidos', 'Platadorma más utilizada',],
@@ -75,6 +79,7 @@ def accion_usuario(accion,):
         elif estadistica_a_ver == 2:
             series_finalizadas=statistics.get_finished_series()
             print (series_finalizadas)
+    
     elif accion == 4:
             print ("Salió")
   
@@ -82,7 +87,6 @@ accion =  menu_builder('¿Qué deseas hacer?',
             ['Agregar serie', 'Modificar estado de serie', 'Modificar capítulos vistos'],
            '',
             return_value= False, default_options=['Estadísticas','Salir'])
-
 
 if accion == 0:
     datos = solicitar_datos()
