@@ -6,6 +6,8 @@ from os import system
 import database_access 
 import csv
 import data_validation 
+import statistics
+
 
 def menu_builder(header: str, options: list, footer: str, return_value = False, default_options = []):
     cursor_position = 0
@@ -52,7 +54,7 @@ def solicitar_datos ():
             return_value= True, default_options=['Primevideo','Crunchyoll'])
     return [name_serie,estado_serie,duracion_serie,cap_vistos,plataforma_serie]
 
-def accion_usuario(accion):
+def accion_usuario(accion,):
     match accion: 
         case 0:
             database_access.add_series(name_serie,estado_serie,duracion_serie,cap_vistos,plataforma_serie)    
@@ -61,7 +63,19 @@ def accion_usuario(accion):
         case 2:
             print ("cap vistos")
         case 3:
-            print ("Estadistcas")
+            estadistica_a_ver =  menu_builder('¿Qué desea ver?',
+            ['Serie con minutos más invertidos', 'Platadorma más utilizada',],
+           '',
+            return_value= False, default_options=['Series finalizas',])
+            if estadistica_a_ver == 0:
+                statistics.get_most_watched_series()
+                print (most_watched_series)
+            elif estadistica_a_ver == 1:
+                statistics.get_most_watched_platform()
+                print (most_watched_platform)
+            elif estadistica_a_ver == 2:
+                statistics.get_finished_series()
+                print (finished)
         case 4:
             print ("Salió")
   
