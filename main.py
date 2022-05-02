@@ -42,13 +42,16 @@ def clean_screen():
     system("cls")
 
 def solicitar_datos ():
-    name_serie=input ("¿Cuál es el nombre de la serie? ")
-    estado_serie =  menu_builder('¿En qué estado se encuentra la serie?',
+    clean_screen();
+    name_serie=input("¿Cuál es el nombre de la serie? ")
+    estado_serie =menu_builder('¿En qué estado se encuentra la serie?',
             ['Quiero verla', 'En proceso', 'Dejé de verla'],
            '',
             return_value= True, default_options=['Finalizada',])
+    clean_screen();
     duracion_serie=int(input("¿Cuántos minutos dura los capíulos de la serie? "))
-    cap_vistos=int(input("\n¿Cuántos capítulos has visto? "))
+    clean_screen();
+    cap_vistos=int(input("¿Cuántos capítulos has visto? "))
     plataforma_serie=menu_builder('¿En qué platadorma se encuentra la serie?',
             ['Netflix', 'HBO', 'Disney Plus'],
            '',
@@ -57,6 +60,12 @@ def solicitar_datos ():
 
 def accion_usuario(accion,):
     if accion == 0:
+        datos = solicitar_datos()
+        name_serie=datos[0]
+        estado_serie=datos[1]
+        duracion_serie=datos[2]
+        cap_vistos=datos[3]
+        plataforma_serie=datos[4]
         database_access.add_series(name_serie,estado_serie,duracion_serie,cap_vistos,plataforma_serie)    
     
     elif accion == 1:
@@ -73,29 +82,46 @@ def accion_usuario(accion,):
         if estadistica_a_ver == 0:
             serie_mas_vista=statistics.get_most_watched_series()
             print (serie_mas_vista)
+        
         elif estadistica_a_ver == 1:
             plataforma_mas_utilizada=statistics.get_most_watched_platform()
             print (plataforma_mas_utilizada)
+        
         elif estadistica_a_ver == 2:
             series_finalizadas=statistics.get_finished_series()
             print (series_finalizadas)
+        
         elif estadistica_a_ver == 3:
-            #AQUÍ HACES LOS TUYO, ÁNGEL
+            clean_screen();
+            series=database_access.get_all_series();
+            if len(series) == 0:
+                print('No has agregado series :(\nComienza agregando tus series favoritas!');
+                return;
+            
+            print('-------LISTA DE SERIES-------\n');
+            for serie in series:
+                nombre = serie['serie'].title();
+                estado = serie['estado'].capitalize();
+                duracion_cap = str(serie['duracion_capitulo']) + ' Minutos';
+                cap_vistos = serie['capitulos_vistos'];
+                plataforma = serie['plataforma'].title();
+                tiempo = str(serie['tiempo_invertido']) + ' Minutos';
+                                
+                print(f'{nombre}');
+                print(f'Estado: {estado}');
+                print(f'Duración por capítulo: {duracion_cap}');
+                print(f'Capítulos vistos: {cap_vistos}');
+                print(f'Plataforma: {plataforma}');
+                print(f'Tiempo total: {tiempo}');
+                
+                print('\n');
     
     elif accion == 4:
-            print ("Salió")
+        print ("Salió")
   
 accion =  menu_builder('¿Qué deseas hacer?',
             ['Agregar serie', 'Modificar estado de serie', 'Modificar capítulos vistos'],
            '',
             return_value= False, default_options=['Estadísticas','Salir'])
-
-if accion == 0:
-    datos = solicitar_datos()
-    name_serie=datos[0]
-    estado_serie=datos[1]
-    duracion_serie=datos[2]
-    cap_vistos=datos[3]
-    plataforma_serie=datos[4]
-                
+              
 accion_usuario(accion)
