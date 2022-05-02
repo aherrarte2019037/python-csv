@@ -55,28 +55,27 @@ def solicitar_datos ():
     return [name_serie,estado_serie,duracion_serie,cap_vistos,plataforma_serie]
 
 def accion_usuario(accion,):
-    match accion: 
-        case 0:
-            database_access.add_series(name_serie,estado_serie,duracion_serie,cap_vistos,plataforma_serie)    
-        case 1:
-            database_access.get_all_series()
-        case 2:
-            print ("cap vistos")
-        case 3:
-            estadistica_a_ver =  menu_builder('¿Qué desea ver?',
-            ['Serie con minutos más invertidos', 'Platadorma más utilizada',],
-           '',
-            return_value= False, default_options=['Series finalizas',])
-            if estadistica_a_ver == 0:
-                statistics.get_most_watched_series()
-                print (most_watched_series)
-            elif estadistica_a_ver == 1:
-                statistics.get_most_watched_platform()
-                print (most_watched_platform)
-            elif estadistica_a_ver == 2:
-                statistics.get_finished_series()
-                print (finished)
-        case 4:
+    if accion == 0:
+        database_access.add_series(name_serie,estado_serie,duracion_serie,cap_vistos,plataforma_serie)    
+    elif accion == 1:
+        database_access.get_all_series()
+    elif accion == 2:
+        print ("cap vistos")
+    elif accion == 3:
+        estadistica_a_ver =  menu_builder('¿Qué desea ver?',
+        ['Serie con minutos más invertidos', 'Platadorma más utilizada',],
+        '',
+        return_value= False, default_options=['Series finalizas',])
+        if estadistica_a_ver == 0:
+            serie_mas_vista=statistics.get_most_watched_series()
+            print (serie_mas_vista)
+        elif estadistica_a_ver == 1:
+            plataforma_mas_utilizada=statistics.get_most_watched_platform()
+            print (plataforma_mas_utilizada)
+        elif estadistica_a_ver == 2:
+            series_finalizadas=statistics.get_finished_series()
+            print (series_finalizadas)
+    elif accion == 4:
             print ("Salió")
   
 accion =  menu_builder('¿Qué deseas hacer?',
