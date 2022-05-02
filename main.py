@@ -42,13 +42,13 @@ def clean_screen():
     system("cls")
 
 def solicitar_datos ():
-    name_serie=input ("¿Cuál es el nombre de la serie?\n")
+    name_serie=input ("¿Cuál es el nombre de la serie? ")
     estado_serie =  menu_builder('¿En qué estado se encuentra la serie?',
             ['Quiero verla', 'En proceso', 'Dejé de verla'],
            '',
             return_value= True, default_options=['Finalizada',])
-    duracion_serie=int(input("¿Cuántos minutos dura los capíulos de la serie?\n"))
-    cap_vistos=int(input("¿Cuántos capítulos has vistos?\n"))
+    duracion_serie=int(input("¿Cuántos minutos dura los capíulos de la serie? "))
+    cap_vistos=int(input("\n¿Cuántos capítulos has visto? "))
     plataforma_serie=menu_builder('¿En qué platadorma se encuentra la serie?',
             ['Netflix', 'HBO', 'Disney Plus'],
            '',
