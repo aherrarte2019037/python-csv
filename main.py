@@ -69,7 +69,7 @@ def accion_usuario(accion,):
         estadistica_a_ver =  menu_builder('¿Qué desea ver?',
         ['Serie con minutos más invertidos', 'Platadorma más utilizada',],
         '',
-        return_value= False, default_options=['Series finalizas',])
+        return_value= False, default_options=['Series finalizas','Todas las series'])
         if estadistica_a_ver == 0:
             serie_mas_vista=statistics.get_most_watched_series()
             print (serie_mas_vista)
@@ -79,6 +79,8 @@ def accion_usuario(accion,):
         elif estadistica_a_ver == 2:
             series_finalizadas=statistics.get_finished_series()
             print (series_finalizadas)
+        elif estadistica_a_ver == 3:
+            #AQUÍ HACES LOS TUYO, ÁNGEL
     
     elif accion == 4:
             print ("Salió")
