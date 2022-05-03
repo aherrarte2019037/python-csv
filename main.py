@@ -92,20 +92,19 @@ def accion_usuario(accion,):
     elif accion == 2:
         clean_screen();
         series=database_access.get_all_series();
-        series = list(map(lambda x: '{} - {}'.format(x['serie'], x['estado']) , series));
+        series = list(map(lambda x: '{} - {} Capítulos vistos'.format(x['serie'], x['capitulos_vistos']) , series));
         series_index = menu_builder('Escoge una serie',
             series,
             '',
         );
         new_caps=int(input('¿Cuántos capítulos has visto ahora?\n'))
-        database_access.update_series(series_index, 'duracion_capitulo', new_caps);
-
-    
+        database_access.update_series(series_index, 'capitulos_vistos', new_caps);
+   
     elif accion == 3:
-        estadistica_a_ver =  menu_builder('¿Qué desea ver?',
+        estadistica_a_ver =  menu_builder('------ESTADÍSTICAS------',
         ['Serie con minutos más invertidos', 'Platadorma más utilizada',],
         '',
-        return_value= False, default_options=['Series finalizas','Todas las series'])
+        return_value= False, default_options=['Series finalizadas','Todas las series'])
         if estadistica_a_ver == 0:
             serie_mas_vista=statistics.get_most_watched_series()
             print (serie_mas_vista)
@@ -115,8 +114,21 @@ def accion_usuario(accion,):
             print (plataforma_mas_utilizada)
         
         elif estadistica_a_ver == 2:
+            clean_screen();
             series_finalizadas=statistics.get_finished_series()
-            print (series_finalizadas)
+            
+            if len(series_finalizadas) == 0:
+                print('No has finalizado series :(\n');
+                input('Presionar ENTER para continuar...');
+                return;
+            
+            print('-------SERIES FINALIZADAS-------\n');
+            for serie in series_finalizadas:
+                nombre = serie['serie'].title();
+                print(f'• {nombre}');
+                print('\n');
+            
+            input('Presionar ENTER para continuar...');
         
         elif estadistica_a_ver == 3:
             clean_screen();
@@ -140,18 +152,19 @@ def accion_usuario(accion,):
                 print(f'Capítulos vistos: {cap_vistos}');
                 print(f'Plataforma: {plataforma}');
                 print(f'Tiempo total: {tiempo}');
-                
                 print('\n');
-    
+
+            input('Presionar ENTER para continuar...');
+            for x in range(250):
+                print('\n');
+                            
     elif accion == 4:
-        print ("Salió")
-        #menu=False
-        Break
-    
-        
-  
+        print ("Hasta pronto :)")
+        exit();
+ 
 while menu==True:
-    accion =  menu_builder('¿Qué deseas hacer?',
+    clean_screen();
+    accion =  menu_builder('------MENÚ------',
                 ['Agregar serie', 'Modificar estado de serie', 'Modificar capítulos vistos'],
             '',
                 return_value= False, default_options=['Estadísticas','Salir'])
