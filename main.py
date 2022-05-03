@@ -36,8 +36,7 @@ def menu_builder(header: str, options: list, footer: str, return_value = False, 
         elif new_cursor_position == key.ENTER:   # ENTER KEY
             if return_value is True: return options[cursor_position]
             else: return cursor_position
-
-  # Cleans terminal screen  
+  
 
 def clean_screen():
     system("cls")
@@ -108,10 +107,12 @@ def accion_usuario(accion,):
         if estadistica_a_ver == 0:
             serie_mas_vista=statistics.get_most_watched_series()
             print (serie_mas_vista)
+            input('Presionar ENTER para continuar...');
         
         elif estadistica_a_ver == 1:
             plataforma_mas_utilizada=statistics.get_most_watched_platform()
             print (plataforma_mas_utilizada)
+            input('Presionar ENTER para continuar...');
         
         elif estadistica_a_ver == 2:
             clean_screen();
@@ -136,6 +137,7 @@ def accion_usuario(accion,):
             if len(series) == 0:
                 print('No has agregado series :(\nComienza agregando tus series favoritas!');
                 return;
+
             
             print('-------LISTA DE SERIES-------\n');
             for serie in series:
@@ -170,5 +172,3 @@ while menu==True:
                 return_value= False, default_options=['Estadísticas','Salir'])
                 
     accion_usuario(accion)
-
-print("Gracias por preferirnos")
