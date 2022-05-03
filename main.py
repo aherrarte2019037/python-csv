@@ -1,4 +1,5 @@
 #Menu principal 
+from ast import Break, While
 from email.policy import default
 from operator import truediv
 from readchar import readkey, key  
@@ -7,7 +8,7 @@ import database_access
 import csv
 import data_validation 
 import statistics
-
+menu=True
 
 def menu_builder(header: str, options: list, footer: str, return_value = False, default_options = []):
     cursor_position = 0
@@ -89,7 +90,16 @@ def accion_usuario(accion,):
         database_access.update_series(series_index, 'estado', new_state);
     
     elif accion == 2:
-        print ("cap vistos")
+        clean_screen();
+        series=database_access.get_all_series();
+        series = list(map(lambda x: '{} - {}'.format(x['serie'], x['estado']) , series));
+        series_index = menu_builder('Escoge una serie',
+            series,
+            '',
+        );
+        new_caps=int(input('¿Cuántos capítulos has visto ahora?\n'))
+        database_access.update_series(series_index, 'duracion_capitulo', new_caps);
+
     
     elif accion == 3:
         estadistica_a_ver =  menu_builder('¿Qué desea ver?',
@@ -135,10 +145,17 @@ def accion_usuario(accion,):
     
     elif accion == 4:
         print ("Salió")
+        #menu=False
+        Break
+    
+        
   
-accion =  menu_builder('¿Qué deseas hacer?',
-            ['Agregar serie', 'Modificar estado de serie', 'Modificar capítulos vistos'],
-           '',
-            return_value= False, default_options=['Estadísticas','Salir'])
-              
-accion_usuario(accion)
+while menu==True:
+    accion =  menu_builder('¿Qué deseas hacer?',
+                ['Agregar serie', 'Modificar estado de serie', 'Modificar capítulos vistos'],
+            '',
+                return_value= False, default_options=['Estadísticas','Salir'])
+                
+    accion_usuario(accion)
+
+print("Gracias por preferirnos")

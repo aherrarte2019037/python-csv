@@ -11,7 +11,7 @@ series_states = ['Quiero verla', 'En proceso', 'Dejé de verla', 'Finalizada'];
 #Obtener lista de series
 def get_all_series():
     file = open('database.csv', newline='', encoding='utf-8');
-    file_reader = csv.DictReader(file, fieldnames=fieldnames);
+    file_reader = csv.DictReader(file);
     all_series = [];
     
     for row in file_reader:
@@ -23,7 +23,7 @@ def get_all_series():
     file.close();
     return all_series;
 
-get_all_series()
+#get_all_series()
 #print(all_series)
 
 #Devuelve True si la serie se añadió
