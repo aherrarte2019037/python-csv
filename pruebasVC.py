@@ -52,17 +52,23 @@ def solicitar_datos ():
             return_value= True, default_options=['Primevideo','Crunchyoll'])
     return [name_serie,estado_serie,duracion_serie,cap_vistos,plataforma_serie]
     
-
+"""""
 datos = solicitar_datos()
 name_serie=datos[0]
 estado_serie=datos[1]
 duracion_serie=datos[2]
 cap_vistos=datos[3]
 plataforma_serie=datos[4]
-
+"""
 #estado_serie =  menu_builder('¿En qué estado se encuentra la serie?',
 #            ['Quiero verla', 'La estoy viendo', 'Dejé de verla'],
 #           '',
 #            return_value= True, default_options=['Finalizada',])
 
-print (name_serie,estado_serie,duracion_serie, cap_vistos,plataforma_serie)
+#print (name_serie,estado_serie,duracion_serie, cap_vistos,plataforma_serie)
+
+lista=["a","c"]
+menu_builder('¿En qué estado se encuentra la serie?',
+            lista,
+           '',
+            return_value= True, default_options=['Finalizada',])

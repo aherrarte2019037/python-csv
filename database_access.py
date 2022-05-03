@@ -11,7 +11,7 @@ series_states = ['Quiero verla', 'En proceso', 'Dejé de verla', 'Finalizada'];
 #Obtener lista de series
 def get_all_series():
     file = open('database.csv', newline='', encoding='utf-8');
-    file_reader = csv.DictReader(file);
+    file_reader = csv.DictReader(file, fieldnames=fieldnames);
     all_series = [];
     
     for row in file_reader:
@@ -22,6 +22,9 @@ def get_all_series():
     
     file.close();
     return all_series;
+
+get_all_series()
+#print(all_series)
 
 #Devuelve True si la serie se añadió
 #Devuelve False si la serie no se añadió (dato incorrecto)
@@ -100,8 +103,7 @@ def update_series(index, field, value):
         
     except:
         return False;
-
 #Ejemplos
 #print(get_all_series());
-#add_series('Mindhunter', series_states[0], 20, 0, series_platforms[0]);
+add_series('Mindhunter', series_states[0], 20, 0, series_platforms[0]);
 #update_series(0, fieldnames[3], 1);
