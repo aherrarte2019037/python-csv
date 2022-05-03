@@ -105,5 +105,5 @@ def update_series(index, field, value):
         return False;
 #Ejemplos
 #print(get_all_series());
-add_series('Mindhunter', series_states[0], 20, 0, series_platforms[0]);
+#add_series('Mindhunter', series_states[0], 20, 0, series_platforms[0]);
 #update_series(0, fieldnames[3], 1);
