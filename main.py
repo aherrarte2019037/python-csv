@@ -70,35 +70,23 @@ def accion_usuario(accion,):
     
     elif accion == 1:
         clean_screen();
-        lista=[];
         series=database_access.get_all_series();
+        series = list(map(lambda x: '{} - {}'.format(x['serie'], x['estado']) , series));
+        
         if len(series) == 0:
             print('No has agregado series :(\nComienza agregando tus series favoritas!');
             return;
-        for serie in series:
-            nombre = serie['serie'].title();
-            print(f'{nombre}')
-        #AQUÍ HAY QUE HACER LOS CAMBIOS DE LA LISTA
-        estadoSerie_a_modificar=input ('¿Qué serie desea modificar?\n')
-        value=menu_builder('¿A qué estado quieres actualizar la serie?',
+        
+        series_index = menu_builder('Escoge una serie',
+            series,
+            '',
+        );
+        new_state = menu_builder('¿A qué estado quieres actualizar la serie?',
             ['Quiero verla', 'En proceso', 'Dejé de verla'],
            '',
-            return_value= True, default_options=['Finalizada',])
-
-        lista=[]
-        for serie in series:
-            
-            lista.append(serie['serie'].title())
-            #index_lista=(len(lista))
-            #str(index_lista)
-            #list(index_lista)
-            #index_lista.sort(reverse=True)
-
-
-            
-            print(lista)
-        #database_access.update_series(index, "estado", value)
-
+            return_value= True, default_options=['Finalizada']
+        );
+        database_access.update_series(series_index, 'estado', new_state);
     
     elif accion == 2:
         print ("cap vistos")
