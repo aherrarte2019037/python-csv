@@ -49,16 +49,16 @@ def solicitar_datos ():
            '',
             return_value= True, default_options=['Finalizada',])
     clean_screen();
-    duracion_serie=int(input("¿Cuántos minutos dura los capíulos de la serie? "))
+    duracion_serie=int(input("¿Cuántos minutos dura los capítulos de la serie? "))
     clean_screen();
     cap_vistos=int(input("¿Cuántos capítulos has visto? "))
     plataforma_serie=menu_builder('¿En qué platadorma se encuentra la serie?',
             ['Netflix', 'HBO', 'Disney Plus'],
            '',
-            return_value= True, default_options=['Primevideo','Crunchyoll'])
+            return_value= True, default_options=['Primevideo','Crunchyroll'])
     return [name_serie,estado_serie,duracion_serie,cap_vistos,plataforma_serie]
 
-def accion_usuario(accion,):
+def accion_usuario(accion):
     if accion == 0:
         datos = solicitar_datos()
         name_serie=datos[0]
@@ -101,7 +101,7 @@ def accion_usuario(accion,):
    
     elif accion == 3:
         estadistica_a_ver =  menu_builder('------ESTADÍSTICAS------',
-        ['Serie con minutos más invertidos', 'Platadorma más utilizada',],
+        ['Serie con minutos más invertidos', 'Plataforma más utilizada',],
         '',
         return_value= False, default_options=['Series finalizadas','Todas las series'])
         if estadistica_a_ver == 0:
