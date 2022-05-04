@@ -10,6 +10,17 @@ import data_validation
 import statistics
 menu=True
 
+#ALGORITMO ARCHIVOS Y PERSISTENCIA 
+#Fecha De Creación 03/05/2022
+#DISEÑO
+#Angel Andres Herrarte Lorenzana
+#Irving Fabricio Morales Acosta
+#PROPÓSITO
+#El propósito de este algoritmo es leer y escribir series en un archivo csv.
+#Se podrá editar los capítulos vistos y el estado de la serie
+#Se mostrarán todas las series y las que tienen el estado de Finalizada
+#También se podra mostrar la plataforma más utilizada por el usuario
+
 def menu_builder(header: str, options: list, footer: str, return_value = False, default_options = []):
     cursor_position = 0
     options += default_options
@@ -37,7 +48,6 @@ def menu_builder(header: str, options: list, footer: str, return_value = False, 
             if return_value is True: return options[cursor_position]
             else: return cursor_position
   
-
 def clean_screen():
     system("cls")
 
